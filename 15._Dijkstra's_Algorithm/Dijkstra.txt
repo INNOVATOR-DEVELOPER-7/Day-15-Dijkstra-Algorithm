@@ -1,0 +1,57 @@
+- Initial Setup: Start with a graph represented as nodes (vertices) and edges with non-negative weights. Choose a starting node (source).
+- Distance Initialization: Assign initial distances to all nodes as infinity, except the source node, which is assigned a distance of zero.
+- Priority Queue: Initialize a priority queue (min-heap) and insert the source node with a distance of zero.
+- Explore Nodes:
+  - Extract the node with the smallest distance (let's call it the current node) from the priority queue.
+  - For each neighbor of the current node:
+    - Calculate the tentative distance to the neighbor through the current node.
+    - If the tentative distance is smaller than the current known distance, update the distance.
+    - If the distance is updated, add the neighbor to the priority queue with the updated distance.
+- Repeat: Continue the process until the priority queue is empty.
+
+Example:
+Graph:
+
+```
+    A
+   / 
+  1   4
+ /     
+B-------C
+      / 
+  2   5   3
+    /     
+    D-------E
+           /
+       6   2
+         /
+          F
+```
+
+Starting Node: A
+
+1. Initial Distances: A = 0, B = ∞, C = ∞, D = ∞, E = ∞, F = ∞
+2. Priority Queue: [(A, 0)]
+3. Extract A, update distances:
+   - Distance to B: 1, Distance to C: 4
+   - Updated Distances: A = 0, B = 1, C = 4, D = ∞, E = ∞, F = ∞
+   - Priority Queue: [(B, 1), (C, 4)]
+4. Extract B, update distances:
+   - Distance to D: 3 (1 + 2)
+   - Updated Distances: A = 0, B = 1, C = 4, D = 3, E = ∞, F = ∞
+   - Priority Queue: [(C, 4), (D, 3)]
+5. Extract D, update distances:
+   - Distance to F: 9 (3 + 6)
+   - Updated Distances: A = 0, B = 1, C = 4, D = 3, E = ∞, F = 9
+   - Priority Queue: [(C, 4), (F, 9)]
+6. Extract C, update distances:
+   - Distance to E: 7 (4 + 3)
+   - Distance to F: 8 (4 + 5)
+   - Updated Distances: A = 0, B = 1, C = 4, D = 3, E = 7, F = 8
+   - Priority Queue: [(F, 8), (E, 7)]
+7. Extract E, update distances:
+   - Distance to F: 9 (7 + 2, already smaller)
+   - Updated Distances: A = 0, B = 1, C = 4, D = 3, E = 7, F = 8
+   - Priority Queue: [(F, 8)]
+8. Extract F, no further updates.
+   - Final Distances: A = 0, B = 1, C = 4, D = 3, E = 7, F = 8
